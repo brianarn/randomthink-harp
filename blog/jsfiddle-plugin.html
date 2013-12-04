@@ -1,0 +1,90 @@
+<!DOCTYPE html><html><head><link rel="stylesheet" href="/css/main.css"><title>jsFiddle plugin for Octopress</title></head><body><p>In my post about <a href="http://brianarn.github.com/meta/2011/07/moving-into-octopress/">moving into Octopress</a>, I mused about how difficult
+it might be to make a jsFiddle plugin. Turns out, it wasn&#39;t that hard.</p>
+<p>I&#39;ve created a simple <a href="http://jsfiddle.net">jsFiddle</a> plugin for <a href="http://octopress.org">Octopress</a>. It allows one to
+easily embed a jsFiddle into their page. The syntax is pretty simple. For all of
+these examples, I&#39;ll be using a fiddle of mine that demonstrates the properties
+of Dojo promises.</p>
+<p>Fiddle URL: <a href="http://jsfiddle.net/brianarn/ccWP7/"><a href="http://jsfiddle.net/brianarn/ccWP7/">http://jsfiddle.net/brianarn/ccWP7/</a></a></p>
+<p>Fortunately, the username isn&#39;t actually required in the URL when using the
+jsFiddle iframe embed code. I&#39;m referring to the portion identified as <code>ccWP7</code>
+in my URL as the fiddle shortcode. There may be a better name for that, but if
+there is, I have no idea what it is.</p>
+<p>Anyhow, let&#39;s talk about how it works.</p>
+<!-- more -->
+
+<h2>General syntax:</h2>
+<p>The general syntax for usage is pretty straightforward.</p>
+<p>{% codeblock %}
+  &#123;% jsfiddle shorttag [tabs] [skin] [height] [width] %}
+{% endcodeblock %}</p>
+<p>In the case of any of the latter options, the word &#39;default&#39; will ensure that
+the plugin fills in the default values as defined by jsFiddle at the time of
+this plugin&#39;s authoring. The defaults are as follows:</p>
+<ul>
+<li>tabs: <code>js,resources,html,css,result</code></li>
+<li>skin: <code>light</code></li>
+<li>height: <code>300px</code></li>
+<li>width: <code>100%</code></li>
+</ul>
+<h2>Examples</h2>
+<h3>Basic Example</h3>
+<p>As the most basic use case, an example of a simple embed.</p>
+<h4>Syntax:</h4>
+<p>{% codeblock %}
+  &#123;% jsfiddle ccWP7 %}
+{% endcodeblock %}</p>
+<h4>Result:</h4>
+<p>{% jsfiddle ccWP7 %}</p>
+<h3>Adjusting Tabs</h3>
+<p>It&#39;s possible to easily adjust the display order of the tabs. In this case, I&#39;m
+moving the result to be the first item shown.</p>
+<h4>Syntax:</h4>
+<p>{% codeblock %}
+  &#123;% jsfiddle ccWP7 result,js,html,css %}
+{% endcodeblock %}</p>
+<h4>Result</h4>
+<p>{% jsfiddle ccWP7 result,js,html,css %}</p>
+<h3>Presentation: Skin</h3>
+<p>We can easily adjust the skin. Right now, it looks like <code>light</code> and
+<code>presentation</code> are really the only supported options, but if jsFiddle announces
+new options, you can start using them immediately.</p>
+<h4>Syntax:</h4>
+<p>{% codeblock %}
+  &#123;% jsfiddle ccWP7 default presentation %}
+{% endcodeblock %}</p>
+<h4>Result:</h4>
+<p>{% jsfiddle ccWP7 default presentation %}</p>
+<h3>Presentation: Height/width</h3>
+<p>We can also fairly easily adjust the height and width. In this case, I&#39;ll make
+it a notably taller fiddle, so that everything can be read more easily (given
+that my fiddle has some write-up in the HTML with some notable output).</p>
+<h4>Syntax:</h4>
+<p>{% codeblock %}
+  &#123;% jsfiddle ccWP7 default default 600px %}
+{% endcodeblock %}</p>
+<h4>Result:</h4>
+<p>{% jsfiddle ccWP7 default default 600px %}</p>
+<h3>Multiple Options at once</h3>
+<p>For each prior example, I&#39;ve been changing just one piece, but nothing prevents
+me from adjusting multiple at once. For example, perhaps I want something really
+large for a presentation I&#39;m giving, and I want my Results tab first.</p>
+<h4>Syntax:</h4>
+<p>{% codeblock %}
+  &#123;% jsfiddle ccWP7 result,js,html,css presentation 800px %}
+{% endcodeblock %}</p>
+<h4>Result:</h4>
+<p>{% jsfiddle ccWP7 result,js,html,css presentation 800px %}</p>
+<h2>Summary</h2>
+<p>If you haven&#39;t been using it, <a href="http://jsfiddle.net">jsFiddle</a> really is a pretty fantastic service.
+I&#39;ve been trying to use it when I want to put up something simple and quick. I
+love <a href="http://github.com">GitHub</a> as well, and gists are neat and all, but there&#39;s something
+special about jsFiddle. This plugin should make it a lot easier to simply embed
+a fiddle (not that copy/pasting the iframe was hard).</p>
+<p>I&#39;ve submitted a pull request to the main Octopress repo, but if you want to
+grab a copy before it gets accepted (if it gets accepted), you can find it in my
+GitHub fork of it
+<a href="https://github.com/brianarn/octopress/blob/master/plugins/jsfiddle.rb">here</a>.
+Here&#39;s hoping you find some use for it!</p>
+<p>Update: It&#39;s officially a part of Octopress now! Here&#39;s the <a href="http://octopress.org/docs/plugins/jsfiddle-tag/">documentation</a>
+for it.</p>
+</body></html>

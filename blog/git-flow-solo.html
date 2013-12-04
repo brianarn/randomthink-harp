@@ -1,0 +1,94 @@
+<!DOCTYPE html><html><head><link rel="stylesheet" href="/css/main.css"><title>Git Flow Solo</title></head><body><p><img src="/images/blog/2012-10-02-git-flow-solo-graph.png" alt="Git Log with Graph"></p>
+<p>The other day on Twitter, I was discussing workflow with my friend <a href="http://geoffpetrie.com/">Geoff</a>,
+and I mentioned that I use <a href="http://nvie.com/posts/a-successful-git-branching-model/">Git Flow</a> for some of the work that I do. He
+mentioned that he&#39;s a solo developer on most of his projects, and so he&#39;s more
+of a <a href="http://scottchacon.com/2011/08/31/github-flow.html">GitHub Flow</a> kind of guy. I&#39;ve read Scott Chacon&#39;s post on GitHub Flow
+in the past, and it&#39;s a nice and light system. However, I find that Git Flow
+gives me some great power, and it seems worth discussing how it helps me as a
+solo developer.</p>
+<!-- more -->
+
+<p>I work for <a href="http://www.sitepen.com/">SitePen</a> by day, but in the evenings and on weekends I have a
+side project for <a href="http://coe.unm.edu/">UNM&#39;s College of Education</a>. While I do have a project
+lead who does most of the styling work and sets direction for the project, I&#39;m
+doing the full stack of development. It&#39;s a pretty straight-forward LAMP stack
+application that, over the past four years, has moved from being a basic
+forms-driven site to a very rich and powerful application. It&#39;s built up using
+<a href="http://jquery.com/">jQuery</a> and a couple of plugins for things like validation and grids and
+whatnot, and while I prefer <a href="http://www.dojotoolkit.org/">Dojo</a> these days, it&#39;s not an option here due
+to legacy. Anyhow, I manage this application&#39;s source with <a href="http://nvie.com/posts/a-successful-git-branching-model/">Git Flow</a>.</p>
+<p>Our source code (which is not public, unfortunately) has several branches
+influenced by the design of Git Flow:</p>
+<ul>
+<li><code>master</code>: This branch is production-ready. Nothing goes on <code>master</code> without
+acceptance from the project lead.</li>
+<li><code>develop</code>: This branch houses code that has been accepted, but not deployed
+into production just yet.</li>
+<li><code>feature/*</code>: There are typically one or more branches that start with
+<code>feature/</code>, and these are where I am actively doing 80% of my work.</li>
+<li><code>hotfix/</code>: There is often one or two of these showing up, and it accounts
+for the other 20% of work performed.</li>
+<li><code>qa</code>: This is a non-Git-Flow branch that I use to track the current state of
+the testing server.</li>
+</ul>
+<p>We&#39;ve used a variety of project management tools in the past (currently using
+<a href="https://trello.com/">Trello</a>) and at any one time, I typically have two to three feature
+requests on my plate, and these features take anywhere from one week to one
+month to implement. The workflow typically goes like so:</p>
+<ul>
+<li>Create a branch off of <code>develop</code>: <code>git flow feature start some-feature</code></li>
+<li>Cook until golden brown and flaky, committing changes both small and large
+as I go</li>
+<li>Once ready for QA, merge into the <code>qa</code> branch and deploy to the dev server</li>
+<li>Once accepted, push changes back into <code>develop</code>: <code>git flow feature finish
+some-feature</code></li>
+</ul>
+<p>Aside: I&#39;m able to use <code>git flow</code> as a command thanks to the wonderful
+<a href="https://github.com/nvie/gitflow">git-flow</a> project, which I can install with <a href="http://mxcl.github.com/homebrew/">Homebrew</a> very trivially:
+<code>brew install git-flow</code> -- Git Flow is a nice process on its own, but this
+addition to command-line git makes it much, much easier to follow. There&#39;s
+even bash completion if you&#39;re into that sort of things.</p>
+<p>Completed features don&#39;t always necessarily get pushed into production, so
+sometimes they&#39;ll queue up a little on <code>develop</code>. Once we&#39;re ready to do a
+deploy of a new feature, it&#39;s as simple as <code>git flow release start YYYYMMDD</code>
+(we don&#39;t have discrete version numbers so I&#39;ve taken to using year, month,
+day as an easy means of tracking release). At that point, I can open up my SQL
+folder where I have any necessary migrations to apply to production, move the
+applied productions into a <code>deployed</code> folder, and complete the release, which
+merges into <code>master</code>. From there it&#39;s a simple push to production.</p>
+<p>While this is all well and good, and our development cycles are relatively
+fast, it&#39;s an academic environment. For those who haven&#39;t experienced
+development in such environments, it&#39;s not uncommon for there to be fires.
+Sometimes it turns out that the feature in development needs to wait because
+we need a new report or some element in the user interface is confusing to the
+new person and we need to address it right now or numbers aren&#39;t adding up
+somewhere and OMG something is wrong FIX IT NOW. This is where Git Flow&#39;s
+hotfix branches are wonderful. Anything that needs a quick turnaround winds up
+going in as a hotfix. That workflow is quite similar to feature development,
+although the branching is a little different.</p>
+<ul>
+<li>Create a branch off of <code>master</code>: <code>git flow hotfix start report-fix</code></li>
+<li>Make adjustments as quickly as I can, introducing no new bugs of course</li>
+<li>Merge into <code>qa</code> and deploy to dev server, and notify my project lead
+immediately so he can test things</li>
+<li>Once accepted, push back into <code>master</code>: <code>git flow hotfix finish report-fix</code></li>
+</ul>
+<p>Features for development, hotfixes for production. It&#39;s a really nice duality
+that isn&#39;t readily visible when you review the Git Flow process the first few
+times.</p>
+<p>This means that I can very easily be working on multiple features at a time
+(occasionally one gets blocked by need of clearer requirements or whatnot)
+while also managing the fast and furious hot requests without totally losing
+my mind of what branch is what and where did I create it and did I do it from
+<code>master</code> or <code>develop</code> etc.</p>
+<p>Git Flow does mention version numbers and whatnot, and if you have a product
+with version numbers, I&#39;m sure it&#39;s handy, but we&#39;re in a fairly perpetual
+state of upgrade, so it&#39;s not so relevant. Using Git Flow gives me a very
+manageable process for handling a lot of requests from a variety of sources.
+Given that I&#39;m a one-man shop there, it&#39;s nice to have a clean and easy-to-use
+workflow like this. It&#39;s really not bad, especially if you install
+<a href="https://github.com/nvie/gitflow">git-flow</a>.</p>
+<p>If you&#39;re not doing <em>anything</em> for branch management, try out one of the
+flow-type processes I&#39;ve linked. It&#39;s really been a significant change to how
+I work, much for the better.</p>
+</body></html>

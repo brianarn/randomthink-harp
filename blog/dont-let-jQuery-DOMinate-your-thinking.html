@@ -1,0 +1,85 @@
+<!DOCTYPE html><html><head><link rel="stylesheet" href="/css/main.css"><title>Don't let jQuery DOMinate your thinking</title></head><body><p>For the past few years, I&#39;ve been working on a side project at the <a href="http://www.unm.edu/">University
+of New Mexico</a>. There&#39;s not a public-facing aspect to it that&#39;s worth
+highlighting, but the administrative side is a very heavy JavaScript
+application, and it didn&#39;t start that way.</p>
+<p>There are several pages to the application, each of which is dedicated to a
+major piece of functionality. As our registered user base has grown, the amount
+of information that needs to be managed has grown quite a bit, and some of my
+earlier pages were really starting to slow down.</p>
+<!-- more -->
+
+<p>When we first started building the application, we went with <a href="http://jquery.com/">jQuery</a>. I&#39;d
+been writing <acronym title="JavaScript">JS</acronym> since before the libraries
+and toolkits were really on the scene, and remember playing with things like
+<a href="http://developer.yahoo.com/yui/">YUI</a> 1.0 and <a href="http://prototypejs.org/">Prototype</a> in prior websites, but my coworker/team lead was
+really keen on trying out this tool that was starting to get some traction.</p>
+<p>From a <acronym title="Computer Science">CS</acronym> perspective, at first,
+jQuery&#39;s interface really bothered me. I liked that Prototype made JS feel a lot
+more like C++ to me. It felt like I could build some interaction, using an
+approach that felt natural and proper to me, like it was somehow &quot;fixing&quot; JS.
+Also, let&#39;s be honest: chaining is ugly.</p>
+<p>However, jQuery made working with the DOM <em>so</em> much easier, and Ajax work was
+just dead simple (especially when cranking out JSON on the backend), so I stuck
+with it.</p>
+<p>After working in jQuery for a while, <em>I stopped thinking about JavaScript</em>. I
+let jQuery kind of take over my brain. For a while, I fell really heavily in
+love with it. It felt just magical. Things just worked. Working with IE wasn&#39;t
+as awful (though still not great, of course).</p>
+<p>I was quite the fan of jQuery -- and in many ways, I still am. jQuery is really
+a fantastic tool for doing DOM manipulation and simple Ajax work. The problem
+is, my application outgrew simple Ajax work and DOM manipulation.</p>
+<p>As the application grew in functionality and codebase, performance really
+started to sink. It was quite awful. However, I was fortunate enough to have
+stumbled upon a relatively new podcast named <a href="http://yayquery.com/">yayQuery</a>. Listening to the yQ
+crew talk about anti-patterns and hiddenhancements and such, I really grew
+interested in optimization. When jQuery 1.4 came out, I was ready to take
+advantage of it, and managed to take one particular page from a load time of ~12
+seconds to ~3.</p>
+<p>Over the past year, I&#39;ve gone through and created a couple of new pages to
+replace some of the worst offenders, and tried cleaning up here and there where
+possible, but on the whole, I realized the major problem I&#39;d run into was that I
+stopped thinking about my data as data, and started thinking about it more as
+DOM.</p>
+<p>If there is one takeaway from my entire ramble here, it is this: Don&#39;t let
+jQuery DOMinate your thinking. When all you have is a DOM hammer, everything is
+a DOM node.</p>
+<p>I had been creating ridiculously complex markup with a lot of hidden elements in
+order to preserve data, rather than using things like <code>jQuery.data</code> to store JS
+objects. I was also doing things like not saving my resulting jQuery objects,
+running code like <code>$(&quot;#foo&quot;)</code> repeatedly, not thinking about the impact of
+creating several new jQuery collections. It&#39;s almost embarassing to admit that I
+was generating a bunch of <code>&lt;li&gt;</code> tags and actively adding them to the DOM one at
+a time, for literally hundreds of list items, but I was.</p>
+<p>You&#39;ll note that <strong>not</strong> all of the things I was doing above are jQuery&#39;s fault.
+It&#39;s just that with jQuery, I stopped thinking about JavaScript -- and, in
+retrospect, that was a really bad thing.</p>
+<p>These days, I&#39;m doing a lot with <a href="http://dojotoolkit.org/">Dojo</a> and while it&#39;s not the JS panacea,
+it&#39;s the first of all of the toolkits and libraries that&#39;s felt like I&#39;m really
+writing JavaScript, and not just writing something else that doesn&#39;t feel like
+JS. I&#39;ve grown to love JavaScript as a language for its own merits.</p>
+<p>So, whether you&#39;re coming to this post and you&#39;re a huge jQuery fan who hasn&#39;t
+tried other tools, or you&#39;re a seasoned vet with the DHTML scars to prove it --
+I encourage you, reach out and try something else. It doesn&#39;t matter what you go
+for, so much as you&#39;re trying something different.</p>
+<h3>Resources</h3>
+<p>Larger libraries/toolkits (typically cross-browser, all with rich DOM/Ajax
+support, often including UI frameworks, etc):</p>
+<ul>
+<li><a href="http://dojotoolkit.org/">Dojo</a></li>
+<li><a href="http://developer.yahoo.com/yui/">YUI</a></li>
+<li><a href="http://mootools.net/">MooTools</a></li>
+<li><a href="http://prototypejs.org/">Prototype</a></li>
+</ul>
+<p>Smaller libraries (focused on specific pieces of functionality):</p>
+<ul>
+<li><a href="http://documentcloud.github.com/underscore/">Underscore</a></li>
+<li><a href="http://documentcloud.github.com/backbone/">Backbone</a></li>
+<li><a href="http://zeptojs.com/">Zepto</a></li>
+</ul>
+<p>Other reading:</p>
+<ul>
+<li><a href="http://blog.rebeccamurphey.com/on-jquery-large-applications">On jQuery &amp; Large Application</a> (the original impetus for this post)</li>
+<li><a href="http://jquerysbestfriends.com/#slide1">jQuery&#39;s Best Friends</a></li>
+<li><a href="http://blog.rebeccamurphey.com/when-youre-building-a-non-trivial-js-applicat">When you&#39;re build a non-trivial JS application...</a></li>
+</ul>
+</body></html>
