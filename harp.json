@@ -1,6 +1,7 @@
 {
   "globals": {
-    "title": "RandomThink.net",
+    "siteTitle": "RandomThink.net",
+    "siteTagline": "Brian's place to dump random thoughts on life and code",
     "author": "Brian Arnold",
     "url": "http://www.randomthink.net"
   }
