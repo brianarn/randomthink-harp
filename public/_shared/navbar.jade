@@ -15,5 +15,5 @@ nav.navbar.navbar-default(role="navigation")
   ul.nav.navbar-nav
     li(class="#{ current.path[0] === 'index' ? 'active' : '' }")
       a(href="/") Home
-    li(class="#{ current.path[0] === 'blog' && current.source === '' ? 'active' : '' }")
+    li(class="#{ current.path[0] === 'blog' ? 'active' : '' }")
       a(href="/blog") Blog
